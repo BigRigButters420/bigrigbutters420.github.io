@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Returning to Tesnex…</title>
+<style>
+  html,body{height:100%;margin:0;background:#0b0b0d;color:#f2f2f3;font-family:system-ui,-apple-system,Roboto,sans-serif}
+  main{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px}
+  h1{font-size:22px;font-weight:600;letter-spacing:.2px;margin:0}
+  p{margin:0;color:#9a9aa3;font-size:15px;max-width:320px}
+  a.btn{display:inline-block;margin-top:6px;padding:14px 28px;border-radius:999px;background:#e31937;color:#fff;text-decoration:none;font-weight:600}
+  .dot{width:10px;height:10px;border-radius:50%;background:#e31937;animation:p 1s infinite alternate}
+  @keyframes p{to{opacity:.25}}
+</style>
+</head>
+<body>
+<main>
+  <div class="dot"></div>
+  <h1>Returning to Tesnex…</h1>
+  <p id="msg">Hang tight while we hand your Tesla sign-in back to the app.</p>
+  <a class="btn" id="open" href="#">Open Tesnex</a>
+</main>
+<script>
+(function () {
+  // Forwards the OAuth response (?code=…&state=… or ?error=…) to the Tesnex app.
+  // Nothing is stored or sent anywhere else; the query string is removed from history.
+  var qs = window.location.search || "";
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var custom = "tesnex://auth" + qs;
+  var intent = "intent://auth" + qs + "#Intent;scheme=tesnex;package=app.tesnex;end";
+  var target = isAndroid ? intent : custom;
+  document.getElementById("open").setAttribute("href", target);
+  if (!qs) {
+    document.getElementById("msg").textContent = "This page is the Tesnex sign-in callback. Start sign-in from the app.";
+    document.getElementById("open").style.display = "none";
+    return;
+  }
+  try { window.history.replaceState(null, "", window.location.pathname); } catch (e) {}
+  window.location.replace(target);
+})();
+</script>
+</body>
+</html>

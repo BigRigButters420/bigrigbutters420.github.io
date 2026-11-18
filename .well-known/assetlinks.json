@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.tesnex",
+      "sha256_cert_fingerprints": [
+        "5A:A7:64:22:C7:39:17:89:EB:89:62:E4:BA:AA:A8:2F:BA:9B:96:DD:81:FF:AD:FB:D8:B0:EB:5E:28:7B:A6:E8"
+      ]
+    }
+  }
+]
